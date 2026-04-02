@@ -11,16 +11,11 @@ repairs_db = []
 
 @app.get("/")
 def read_root():
-    return {"repairs": repairs_db}
-    
+    return {"message": "API is running"}
+
 @app.get("/repairs")
 def get_repairs():
-    return {
-        "repairs": [
-            {"id": 1, "device": "Antminer S19", "status": "pending"},
-            {"id": 2, "device": "Ericsson Radio", "status": "completed"}
-        ]
-    }
+    return {"repairs": repairs_db}
 
 @app.post("/repairs")
 def create_repair(repair: Repair):
