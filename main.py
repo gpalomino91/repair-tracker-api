@@ -1,11 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import sqlite3
 
 class Repair(BaseModel):
     device: str
     status: str
     
 app = FastAPI()
+conn = sqlite3.connect("repairs.db", check_same_thread=False)
+cursor = conn.cursor()
 
 repairs_db = []
 
