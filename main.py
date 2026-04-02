@@ -11,7 +11,7 @@ repairs_db = []
 
 @app.get("/")
 def read_root():
-    return {"message": "API is running"}
+    return {"repairs": repairs_db}
     
 @app.get("/repairs")
 def get_repairs():
@@ -24,4 +24,5 @@ def get_repairs():
 
 @app.post("/repairs")
 def create_repair(repair: Repair):
+    repair_db.append(repair.dict())
     return {"received": repair}
