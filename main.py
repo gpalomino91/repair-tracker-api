@@ -7,6 +7,8 @@ class Repair(BaseModel):
     
 app = FastAPI()
 
+repairs_db = []
+
 @app.get("/")
 def read_root():
     return {"message": "API is running"}
@@ -21,5 +23,5 @@ def get_repairs():
     }
 
 @app.post("/repairs")
-def create_repair():
-    return {"message": "repair created"}
+def create_repair(repair: Repair):
+    return {"received": repair}
