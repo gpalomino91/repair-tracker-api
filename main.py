@@ -1,5 +1,10 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
+class Repair(BaseModel):
+    device: str
+    status: str
+    
 app = FastAPI()
 
 @app.get("/")
