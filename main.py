@@ -24,5 +24,17 @@ def get_repairs():
 
 @app.post("/repairs")
 def create_repair(repair: Repair):
-    repair_db.append(repair.dict())
-    return {"received": repair}
+    new_repair = {
+        "id": len(repairs_db) + 1,
+        "device": repair.device,
+        "status": repair.status
+    }
+    repairs_db.append(new_repair)
+    return {"message": "repair created", "repair": new_repair}
+
+@app.get("/repairs/{repair_id}")
+def get_repair(repair_id: int):
+    for repair in repairs_db:
+        if repair["id"] == repair_id:
+            return {"repair": repair}
+    return {"error": "repair not found"}
