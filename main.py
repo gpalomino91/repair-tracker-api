@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 class Repair(BaseModel):
@@ -37,4 +37,4 @@ def get_repair(repair_id: int):
     for repair in repairs_db:
         if repair["id"] == repair_id:
             return {"repair": repair}
-    return {"error": "repair not found"}
+    raise HTTPException(status_code=404, detail="repair not found")
