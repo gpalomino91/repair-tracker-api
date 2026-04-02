@@ -33,3 +33,12 @@ def get_repair(repair_id: int):
         if repair["id"] == repair_id:
             return {"repair": repair}
     raise HTTPException(status_code=404, detail="repair not found")
+
+@app.put("/repairs/{repair_id}")
+def update_repair_status(repair_id: int, repair: Repair):
+    for saved_repair in repairs_db:
+        if saved_repair["id"] == repair_id:
+            saved_repair["device"] = repair.device
+            saved_repair["status"] = repair.status
+            return {"message": "repair updated", "repair": saved_repair}
+    raise HTTPException(status_code=404, detail="repair not found")
