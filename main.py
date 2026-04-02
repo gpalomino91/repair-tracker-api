@@ -8,4 +8,9 @@ def read_root():
     
 @app.get("/repairs")
 def get_repairs():
-    return {"repairs": []}
+    return {
+        "repairs": [
+            {"id": 1, "device": "Antminer S19", "status": "pending"},
+            {"id": 2, "device": "Ericsson Radio", "status": "completed"}
+        ]
+    }
