@@ -14,3 +14,7 @@ def get_repairs():
             {"id": 2, "device": "Ericsson Radio", "status": "completed"}
         ]
     }
+
+@app.post("/repairs")
+def create_repair():
+    return {"message": "repair created"}
