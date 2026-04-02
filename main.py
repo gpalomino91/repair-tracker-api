@@ -5,3 +5,7 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return {"message": "API is running"}
+    
+@app.get("/repairs")
+def get_repairs():
+    return {"repairs": []}
