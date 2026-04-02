@@ -42,3 +42,11 @@ def update_repair_status(repair_id: int, repair: Repair):
             saved_repair["status"] = repair.status
             return {"message": "repair updated", "repair": saved_repair}
     raise HTTPException(status_code=404, detail="repair not found")
+    
+@app.delete("/repairs/{repair_id}")
+def delete_repair(repair_id: int):
+    for repair in repairs_db:
+        if repair["id"] == repair_id:
+            repairs_db.remove(repair)
+            return {"message": "repair deleted"}
+    raise HTTPException(status_code=404, detail="repair not found")
