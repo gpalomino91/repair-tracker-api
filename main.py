@@ -10,6 +10,15 @@ app = FastAPI()
 conn = sqlite3.connect("repairs.db", check_same_thread=False)
 cursor = conn.cursor()
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS repairs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    device TEXT NOT NULL,
+    status TEXT NOT NULL
+)
+""")
+conn.commit()
+
 repairs_db = []
 
 @app.get("/")
@@ -22,14 +31,23 @@ def get_repairs():
 
 @app.post("/repairs")
 def create_repair(repair: Repair):
-    new_repair = {
-        "id": len(repairs_db) + 1,
-        "device": repair.device,
-        "status": repair.status
-    }
-    repairs_db.append(new_repair)
-    return {"message": "repair created", "repair": new_repair}
+    cursor.execute(
+        "INSERT INTO repairs (device, status) VALUES (?, ?)",
+        (repair.device, repair.status)
+    )
+    conn.commit()
 
+    new_id = cursor.lastrowid
+
+    return {
+        "message": "repair created",
+        "repair": {
+            "id": new_id,
+            "device": repair.device,
+            "status": repair.status
+        }
+    }
+    
 @app.get("/repairs/{repair_id}")
 def get_repair(repair_id: int):
     for repair in repairs_db:
