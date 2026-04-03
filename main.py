@@ -100,8 +100,13 @@ def update_repair_status(repair_id: int, repair: Repair):
     
 @app.delete("/repairs/{repair_id}")
 def delete_repair(repair_id: int):
-    for repair in repairs_db:
-        if repair["id"] == repair_id:
-            repairs_db.remove(repair)
-            return {"message": "repair deleted"}
-    raise HTTPException(status_code=404, detail="repair not found")
+    cursor.execute(
+        "DELETE FROM repairs WHERE id = ?",
+        (repair_id,)
+    )
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        raise HTTPException(status_code=404, detail="repair not found")
+
+    return {"message": "repair deleted"}
