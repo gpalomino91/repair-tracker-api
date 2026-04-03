@@ -80,12 +80,23 @@ def get_repair(repair_id: int):
 
 @app.put("/repairs/{repair_id}")
 def update_repair_status(repair_id: int, repair: Repair):
-    for saved_repair in repairs_db:
-        if saved_repair["id"] == repair_id:
-            saved_repair["device"] = repair.device
-            saved_repair["status"] = repair.status
-            return {"message": "repair updated", "repair": saved_repair}
-    raise HTTPException(status_code=404, detail="repair not found")
+    cursor.execute(
+        "UPDATE repairs SET device = ?, status = ? WHERE id = ?",
+        (repair.device, repair.status, repair_id)
+    )
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        raise HTTPException(status_code=404, detail="repair not found")
+
+    return {
+        "message": "repair updated",
+        "repair": {
+            "id": repair_id,
+            "device": repair.device,
+            "status": repair.status
+        }
+    }
     
 @app.delete("/repairs/{repair_id}")
 def delete_repair(repair_id: int):
