@@ -61,9 +61,21 @@ def create_repair(repair: Repair):
     
 @app.get("/repairs/{repair_id}")
 def get_repair(repair_id: int):
-    for repair in repairs_db:
-        if repair["id"] == repair_id:
-            return {"repair": repair}
+    cursor.execute(
+        "SELECT id, device, status FROM repairs WHERE id = ?",
+        (repair_id,)
+    )
+    row = cursor.fetchone()
+
+    if row:
+        return {
+            "repair": {
+                "id": row[0],
+                "device": row[1],
+                "status": row[2]
+            }
+        }
+
     raise HTTPException(status_code=404, detail="repair not found")
 
 @app.put("/repairs/{repair_id}")
