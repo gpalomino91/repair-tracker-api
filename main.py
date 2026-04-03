@@ -27,7 +27,18 @@ def read_root():
 
 @app.get("/repairs")
 def get_repairs():
-    return {"repairs": repairs_db}
+    cursor.execute("SELECT id, device, status FROM repairs")
+    rows = cursor.fetchall()
+
+    repairs = []
+    for row in rows:
+        repairs.append({
+            "id": row[0],
+            "device": row[1],
+            "status": row[2]
+        })
+
+    return {"repairs": repairs}
 
 @app.post("/repairs")
 def create_repair(repair: Repair):
