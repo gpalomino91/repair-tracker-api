@@ -4,48 +4,52 @@ A basic backend API for tracking repair jobs, built with Python, FastAPI, and SQ
 
 ## Features
 
-- Create repair records
-- List all repairs
-- Get a repair by ID
-- Update a repair
-- Delete a repair
+* Create repair records
+* List all repairs
+* Get a repair by ID
+* Update a repair
+* Delete a repair
 
 ## Tech Stack
 
-- Python
-- FastAPI
-- SQLite
-- Pydantic
+* Python
+* FastAPI
+* SQLite
+* Pydantic
 
 ## Project Structure
 
-- `main.py` — main FastAPI application
-- `repairs.db` — SQLite database file
+* `main.py` — main FastAPI application
+* `repairs.db` — SQLite database file
 
 ## API Endpoints
 
 ### Health Check
-- `GET /`
-- Returns a simple message to confirm the API is running
+
+* `GET /`
+* Returns a simple message to confirm the API is running
 
 ### Get All Repairs
-- `GET /repairs`
-- Returns all repair records
+
+* `GET /repairs`
+* Returns all repair records
 
 ### Get One Repair
-- `GET /repairs/{repair_id}`
-- Returns a single repair by ID
+
+* `GET /repairs/{repair_id}`
+* Returns a single repair by ID
 
 ### Create Repair
-- `POST /repairs`
-- Example request body:
+
+* `POST /repairs`
+* Example request body:
 
 ```json
 {
   "device": "Ericsson Radio",
   "status": "pending"
 }
-````
+```
 
 ### Update Repair
 
@@ -93,3 +97,4 @@ This is a basic CRUD API project created for practice and portfolio development.
 * Add better validation
 * Add tests
 * Deploy the API
+
