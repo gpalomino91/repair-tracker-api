@@ -19,8 +19,6 @@ CREATE TABLE IF NOT EXISTS repairs (
 """)
 conn.commit()
 
-repairs_db = []
-
 @app.get("/")
 def read_root():
     return {"message": "API is running"}
